@@ -50,7 +50,10 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	
+	private boolean movedThisStep;
+	
 	protected final void walk(int direction) {
+		movedThisStep = true;
 		energy -= Params.walk_energy_cost;
 		switch (direction){
 			case 0: x_coord++;
@@ -102,7 +105,8 @@ public abstract class Critter {
 	}
 	
 	protected final void run(int direction) {
-		
+		walk(direction);
+		walk(direction);
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
