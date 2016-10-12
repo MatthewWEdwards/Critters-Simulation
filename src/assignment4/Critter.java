@@ -12,7 +12,7 @@
  */
 package assignment4;
 
-import java.util.List;
+import java.util.*;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -57,48 +57,48 @@ public abstract class Critter {
 		energy -= Params.walk_energy_cost;
 		switch (direction){
 			case 0: x_coord++;
-					if (x_coord == world_width)
+					if (x_coord == Params.world_width)
 						x_coord = 0;
 				break;
 			case 1: y_coord--;
 					x_coord++;
-					if (x_coord == world_width)
+					if (x_coord == Params.world_width)
 						x_coord = 0;
 					if (y_coord < 0)
-						y_coord = world_height - 1;
+						y_coord = Params.world_height - 1;
 				break;
 			case 2: y_coord--;
 					if (y_coord < 0)
-						y_coord = world_height - 1;
+						y_coord = Params.world_height - 1;
 				break;
 			case 3: y_coord--;
 					x_coord--;
 					if (y_coord < 0)
-						y_coord = world_height - 1;
+						y_coord = Params.world_height - 1;
 					if (x_coord < 0)
-						x_coord = world_width - 1;
+						x_coord = Params.world_width - 1;
 				break;
 			case 4: x_coord--;
 					if (x_coord < 0)
-						x_coord = world_width - 1;
+						x_coord = Params.world_width - 1;
 				break;
 			case 5: x_coord--;
 					y_coord++;
 					if (x_coord < 0)
-						x_coord = world_width - 1;
-					if (y_coord == world_height)
+						x_coord = Params.world_width - 1;
+					if (y_coord == Params.world_height)
 						y_coord = 0;
 				break;
 			case 6: y_coord++;
-					if (y_coord == world_height)
+					if (y_coord == Params.world_height)
 						y_coord = 0;
 				break;
 			case 7: y_coord++;
 					x_coord--;
-					if (y_coord == world_height)
+					if (y_coord == Params.world_height)
 						y_coord = 0;
 					if(x_coord < 0)
-						x_coord = world_width -1;
+						x_coord = Params.world_width -1;
 				break;
 		}
 		
@@ -244,7 +244,7 @@ public abstract class Critter {
 		while(iter.hasNext()){ 
 			current = iter.next();
 			doTimeStep(current);
-			current.energy -= params.rest_energy_cost;
+			current.energy -= Params.rest_energy_cost;
 			if(current.energy < 1)
 				iter.remove();
 		}

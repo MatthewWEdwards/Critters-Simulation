@@ -11,7 +11,7 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 
 
@@ -68,13 +68,74 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
+        
+        
+        
+        //Misc tests, TODO delete before submission
         try{
+        	Critter.makeCritter("Craig");
+        	Critter.makeCritter("Craig");
+        	Critter.makeCritter("Craig");
         	Critter.makeCritter("Craig");
         }catch(InvalidCritterException e){
         	
         }
         Critter.displayWorld();
         System.out.println("GLHF");
+        //End of Misc Tests
+        
+        //Start controller component
+        
+        ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
+        while(kb.hasNext()){
+            boolean validInput = false;
+        	String current = kb.nextLine();
+        	current.trim();
+        	
+        	for(int i = 0; i < commands.size(); i++){
+        		if(current.contains(commands.get(i))){
+        			validInput = true;
+        		}
+        	}
+        	if (!validInput){
+        		continue;
+        	}
+        	
+        	switch (current){
+        		case "quit":
+        			System.exit(0);
+        			break;
+        		case "show":
+        			Critter.displayWorld();
+        			break;
+        		case "step":
+        			if(current.length() < 5){
+        				Critter.worldTimeStep();
+        			}
+        			else{
+	        			for(int stepper = 0; stepper < current.charAt(5); stepper++){
+	        				Critter.worldTimeStep();
+	        			}
+        			}
+        			break;
+        		case "seed":
+        			Critter.setSeed(Integer.parseInt(current.substring(5, current.length()-1)));
+        			break;
+        		case "make":
+        			break;
+        		case "stats":
+        			break;
+        		default:
+        	}
+        	
+        }
+        
+        
+        
+        
+        
+        
+        
         
         /* Write your code above */
         System.out.flush();
