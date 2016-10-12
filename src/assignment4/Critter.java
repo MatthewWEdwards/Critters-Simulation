@@ -239,7 +239,7 @@ public abstract class Critter {
 	
 	public static void worldTimeStep() {
 		timestep++;
-		ListIterator<Critter> iter = new listIterator();
+		ListIterator<Critter> iter = new ListIterator();
 		Critter current = new Critter;
 		while(iter.hasNext()){ 
 			current = iter.next();

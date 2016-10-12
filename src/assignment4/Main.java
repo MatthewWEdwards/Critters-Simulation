@@ -82,7 +82,7 @@ public class Main {
         }
         Critter.displayWorld();
         System.out.println("GLHF");
-        //End of Misc Tests
+        //End of Misc. Tests
         
         //Start controller component
         
@@ -98,6 +98,7 @@ public class Main {
         		}
         	}
         	if (!validInput){
+        		System.out.println("DEBUG: invalid input");
         		continue;
         	}
         	
@@ -126,17 +127,12 @@ public class Main {
         		case "stats":
         			break;
         		default:
+        			System.out.println("DEBUG: invalid input");
         	}
         	
         }
-        
-        
-        
-        
-        
-        
-        
-        
+        //End controller component
+                
         /* Write your code above */
         System.out.flush();
 
