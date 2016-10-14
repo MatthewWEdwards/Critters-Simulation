@@ -107,6 +107,8 @@ public abstract class Critter {
 	protected final void run(int direction) {
 		walk(direction);
 		walk(direction);
+		energy += (2*Params.walk_energy_cost);
+		energy -= Params.run_energy_cost;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -240,9 +242,10 @@ public abstract class Critter {
 	public static void worldTimeStep() {
 		timestep++;
 		ListIterator<Critter> iter = new ListIterator();
-		Critter current = new Critter;
+		Critter current;
 		while(iter.hasNext()){ 
 			current = iter.next();
+			current.movedThisStep = false;
 			doTimeStep(current);
 			current.energy -= Params.rest_energy_cost;
 			if(current.energy < 1)
