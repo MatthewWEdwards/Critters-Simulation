@@ -13,6 +13,7 @@
 package assignment4;
 
 import java.util.*;
+import java.lang.*;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -25,6 +26,7 @@ public abstract class Critter {
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private static List<String> typesOfCritters = new java.util.ArrayList<String>();
+	private static int timeStep = 0;
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -110,6 +112,19 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		
+		if(this.getEnergy() < Params.min_reproduce_energy){
+			return;
+		}
+		((TestCritter) offspring).setEnergy(this.getEnergy()/2);
+		if(this.getEnergy() % 2 == 1)
+			((TestCritter) this).setEnergy(this.getEnergy()/2 + 1); //TODO: is this casting okay?
+		else
+			((TestCritter) this).setEnergy(this.getEnergy()/2);
+		((TestCritter) offspring).setX_coord(x_coord);
+		((TestCritter) offspring).setX_coord(y_coord);
+		offspring.walk(direction);
+		
 	}
 
 	public abstract void doTimeStep();
@@ -238,15 +253,13 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
-		timestep++;
-		ListIterator<Critter> iter = new ListIterator();
-		Critter current = new Critter;
-		while(iter.hasNext()){ 
-			current = iter.next();
-			doTimeStep(current);
+		timeStep++;
+		for(int i = 0; i < population.size(); i++){
+			Critter current = population.get(i);
+			current.doTimeStep();
 			current.energy -= Params.rest_energy_cost;
 			if(current.energy < 1)
-				iter.remove();
+				population.remove(i);
 		}
 	}
 	
