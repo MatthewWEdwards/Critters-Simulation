@@ -253,13 +253,16 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
-		timeStep++;
-		for(int i = 0; i < population.size(); i++){
-			Critter current = population.get(i);
-			current.doTimeStep();
+		timestep++;
+		ListIterator<Critter> iter = new ListIterator();
+		Critter current;
+		while(iter.hasNext()){ 
+			current = iter.next();
+			current.movedThisStep = false;
+			doTimeStep(current);
 			current.energy -= Params.rest_energy_cost;
 			if(current.energy < 1)
-				population.remove(i);
+				iter.remove();
 		}
 	}
 	
