@@ -51,10 +51,10 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
-	
 	private boolean movedThisStep;
 	
 	protected final void walk(int direction) {
+		//TODO: the world only wraps around width-wise, not height-wise. We need to fix this.
 		movedThisStep = true;
 		energy -= Params.walk_energy_cost;
 		switch (direction){
@@ -154,6 +154,7 @@ public abstract class Critter {
 			newCrit.x_coord = Critter.getRandomInt(Params.world_width);
 			newCrit.y_coord = Critter.getRandomInt(Params.world_height);
 			newCrit.energy = Params.start_energy;
+			newCrit.movedThisStep = false;
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoClassDefFoundError e) {
 			throw new InvalidCritterException(critter_class_name);
 		}
@@ -265,11 +266,12 @@ public abstract class Critter {
 			current.doTimeStep();
 			current.energy -= Params.rest_energy_cost;
 		}
+		
 		for(int k = 0; k < population.size(); k++){
 			Critter current = population.get(k);
 			for(int i = 0; i < population.size(); i++){
 				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord);
-					conflict(current, population.get(i));
+					conflict(current, population.get(i)); //TODO: make this work for multiple creatures on the same spot
 			}
 		}
 		
@@ -277,9 +279,15 @@ public abstract class Critter {
 			if(checkDead.energy < 1)
 				population.remove(checkDead);
 		}
+		
 		for(Critter addBabies: babies){
 			population.add(addBabies);
 		}
+		
+		for(int k = 0; k < population.size(); k++){
+			population.get(k).movedThisStep = false;
+		}
+		
 	}
 
 	
@@ -316,6 +324,35 @@ public abstract class Critter {
 	}
 
 	private static void conflict(Critter a, Critter b){
-		//fight code
+		int aRoll = 0;
+		int bRoll = 0;
+		boolean aChoice = a.fight(b.toString());
+		boolean bChoice = b.fight(a.toString());
+		
+		if(aChoice){
+			aRoll = Critter.getRandomInt(a.energy+1);
+		}
+		else{
+			a.run(Critter.getRandomInt(8)); //TODO: make sure that this run doesn't cause any position conflicts.
+		}
+		if(bChoice){
+			bRoll = Critter.getRandomInt(b.energy+1);
+		}
+		else{
+			b.run(Critter.getRandomInt(8));
+		}
+		
+		
+		
+		if(a.x_coord == b.x_coord && a.y_coord == b.y_coord){
+			if(aRoll > bRoll){
+				aRoll += b.energy/2;
+				b.energy = 0;
+			}
+			else{
+				bRoll += a.energy/2;
+				a.energy = 0;
+			}
+		}	
 	}
 }
