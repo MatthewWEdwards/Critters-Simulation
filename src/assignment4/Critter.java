@@ -51,7 +51,7 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
-	private boolean movedThisStep;
+	private boolean movedThisStep; // TODO: implement this in fight
 	
 	protected final void walk(int direction) {
 		//TODO: the world only wraps around width-wise, not height-wise. We need to fix this.
