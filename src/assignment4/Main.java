@@ -77,16 +77,19 @@ public class Main {
         	Critter.makeCritter("Craig");
         	Critter.makeCritter("Craig");
         	Critter.makeCritter("Craig");
+        	Critter.makeCritter("Algae");
+        	Critter.makeCritter("Algae");
         }catch(InvalidCritterException e){
         	
         }
         Critter.displayWorld();
-        System.out.println("GLHF");
+        System.out.println("\nGLHF");
         //End of Misc. Tests
         
         //Start controller component
         
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
+        System.out.print("critters>");
         while(kb.hasNext()){
             boolean validInput = false;
         	String current = kb.nextLine();
@@ -95,10 +98,11 @@ public class Main {
         	for(int i = 0; i < commands.size(); i++){
         		if(current.contains(commands.get(i))){
         			validInput = true;
+        			break;
         		}
         	}
         	if (!validInput){
-        		System.out.println("DEBUG: invalid input");
+        		System.out.print("DEBUG: invalid input\ncritters>");
         		continue;
         	}
         	
@@ -127,8 +131,9 @@ public class Main {
         		case "stats":
         			break;
         		default:
-        			System.out.println("DEBUG: invalid input");
+        			System.out.print("DEBUG: invalid input\ncritters>");
         	}
+        	System.out.print("\ncritters>");
         	
         }
         //End controller component

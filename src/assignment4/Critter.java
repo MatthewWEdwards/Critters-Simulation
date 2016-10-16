@@ -118,14 +118,15 @@ public abstract class Critter {
 		if(this.getEnergy() < Params.min_reproduce_energy){
 			return;
 		}
-		((TestCritter) offspring).setEnergy(this.getEnergy()/2);
+		offspring.energy = this.getEnergy()/2;
 		if(this.getEnergy() % 2 == 1)
-			((TestCritter) this).setEnergy(this.getEnergy()/2 + 1); //TODO: is this casting okay?
+			this.energy = this.getEnergy()/2 + 1;
 		else
-			((TestCritter) this).setEnergy(this.getEnergy()/2);
-		((TestCritter) offspring).setX_coord(x_coord);
-		((TestCritter) offspring).setX_coord(y_coord);
+			this.energy = this.getEnergy()/2;
+		offspring.x_coord = Critter.getRandomInt(this.x_coord);
+		offspring.y_coord = Critter.getRandomInt(this.y_coord);
 		offspring.walk(direction);
+		babies.add(offspring);
 		
 	}
 
@@ -143,17 +144,20 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 * @throws ClassNotFoundException 
 	 */
-	@SuppressWarnings("rawtypes")
+	
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException{
-		Class critClass = null;
 		
 		try {
-			Class critter = Class.forName("assignment4." + critter_class_name);
+			Class<?> critter = Class.forName("assignment4." + critter_class_name);
 			Critter newCrit = (Critter) critter.newInstance();
 			population.add(newCrit);
+			newCrit.x_coord = Critter.getRandomInt(Params.world_width);
+			newCrit.y_coord = Critter.getRandomInt(Params.world_height);
+			newCrit.energy = Params.start_energy;
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoClassDefFoundError e) {
 			throw new InvalidCritterException(critter_class_name);
 		}
+		
 		
 		
 	
@@ -251,19 +255,33 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
-		
+		population.clear();
 	}
 	
 	public static void worldTimeStep() {
 		timeStep++;
-		for(int i = 0; i < population.size(); i++){
+		for(int i = 0; i < population.size(); i++){ //Time Steps
 			Critter current = population.get(i);
 			current.doTimeStep();
 			current.energy -= Params.rest_energy_cost;
-			if(current.energy < 1)
-				population.remove(i);
+		}
+		for(int k = 0; k < population.size(); k++){
+			Critter current = population.get(k);
+			for(int i = 0; i < population.size(); i++){
+				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord);
+					conflict(current, population.get(i));
+			}
+		}
+		
+		for(Critter checkDead: population){
+			if(checkDead.energy < 1)
+				population.remove(checkDead);
+		}
+		for(Critter addBabies: babies){
+			population.add(addBabies);
 		}
 	}
+
 	
 	public static void displayWorld() {
 		System.out.print("+");
@@ -295,5 +313,9 @@ public abstract class Critter {
 		
 		
 		
+	}
+
+	private static void conflict(Critter a, Critter b){
+		//fight code
 	}
 }

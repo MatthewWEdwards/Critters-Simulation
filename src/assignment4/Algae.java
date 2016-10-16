@@ -5,11 +5,9 @@ package assignment4;
  */
 public class Algae extends Critter.TestCritter {
 
-	public Algae(){
-		super.setEnergy(Params.start_energy);
-		super.setX_coord(Critter.getRandomInt(Params.world_width));
-		super.setY_coord(Critter.getRandomInt(Params.world_height));
-	}
+	
+	@Override
+	public String toString() { return "@"; }
 	
 	@Override
 	public void doTimeStep() {
@@ -18,7 +16,7 @@ public class Algae extends Critter.TestCritter {
 	}
 
 	@Override
-	public boolean fight(String oponent) {
+	public boolean fight(String opponent) {
 		return false;
 	}
 	
