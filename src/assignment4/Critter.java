@@ -270,14 +270,22 @@ public abstract class Critter {
 		for(int k = 0; k < population.size(); k++){
 			Critter current = population.get(k);
 			for(int i = 0; i < population.size(); i++){
-				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord);
+				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord && i != k){
 					conflict(current, population.get(i)); //TODO: make this work for multiple creatures on the same spot
+				}
 			}
 		}
 		
-		for(Critter checkDead: population){
-			if(checkDead.energy < 1)
-				population.remove(checkDead);
+		boolean [] toRemove = new boolean[population.size()];
+		for(int i = 0; i < population.size(); i++){
+			if(population.get(i).energy < 1){
+				toRemove[i] = true;
+			}
+		}
+		for(int i = population.size()-1; i >= 0; i--){
+			if(toRemove[i] == true){
+				population.remove(i);
+			}
 		}
 		
 		for(Critter addBabies: babies){
@@ -332,15 +340,10 @@ public abstract class Critter {
 		if(aChoice){
 			aRoll = Critter.getRandomInt(a.energy+1);
 		}
-		else{
-			a.run(Critter.getRandomInt(8)); //TODO: make sure that this run doesn't cause any position conflicts.
-		}
 		if(bChoice){
 			bRoll = Critter.getRandomInt(b.energy+1);
 		}
-		else{
-			b.run(Critter.getRandomInt(8));
-		}
+
 		
 		
 		

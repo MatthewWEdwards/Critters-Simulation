@@ -89,14 +89,18 @@ public class Main {
         //Start controller component
         
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
+        ArrayList<Character> intChars = new ArrayList<Character>(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
         System.out.print("critters>");
         while(kb.hasNext()){
             boolean validInput = false;
         	String current = kb.nextLine();
         	current.trim();
         	
+        	
+        	String switchString = new String(); 
         	for(int i = 0; i < commands.size(); i++){
         		if(current.contains(commands.get(i))){
+        			switchString = commands.get(i);
         			validInput = true;
         			break;
         		}
@@ -106,7 +110,7 @@ public class Main {
         		continue;
         	}
         	
-        	switch (current){
+        	switch (switchString){
         		case "quit":
         			System.exit(0);
         			break;
@@ -114,11 +118,22 @@ public class Main {
         			Critter.displayWorld();
         			break;
         		case "step":
+        			//All this code is to parse how many steps the user wants to do
         			if(current.length() < 5){
         				Critter.worldTimeStep();
         			}
         			else{
-	        			for(int stepper = 0; stepper < current.charAt(5); stepper++){
+        				charLoop:
+        				for(int i = 5; i < current.length(); i++){
+        					for(char k = '0'; k <= '9'; k++){
+	        	        		if(current.charAt(i) == k){
+	        	        			continue charLoop;
+	        	        		}
+        					}
+        	        		System.out.println("DEBUG: invalid input");
+        	        		return;
+        				}
+	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
 	        				Critter.worldTimeStep();
 	        			}
         			}
@@ -131,7 +146,7 @@ public class Main {
         		case "stats":
         			break;
         		default:
-        			System.out.print("DEBUG: invalid input\ncritters>");
+        			System.out.println("DEBUG: invalid input");
         	}
         	System.out.print("\ncritters>");
         	
