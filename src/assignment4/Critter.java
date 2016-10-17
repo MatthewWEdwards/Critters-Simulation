@@ -131,7 +131,7 @@ public abstract class Critter {
 	}
 
 	public abstract void doTimeStep();
-	public abstract boolean fight(String oponent);
+	public abstract boolean fight(String oponent); //in fight, if choose to move, cannot move to unoccupied space
 	
 	/**
 	 * create and initialize a Critter subclass.
@@ -268,11 +268,22 @@ public abstract class Critter {
 		}
 		
 		for(int k = 0; k < population.size(); k++){
+			Queue<Critter> Q = new LinkedList<Critter>();
 			Critter current = population.get(k);
 			for(int i = 0; i < population.size(); i++){
 				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord && i != k){
-					conflict(current, population.get(i)); //TODO: make this work for multiple creatures on the same spot
+					//add to conflict queue
+					Q.add(population.get(i));
+					//conflict(current, population.get(i)); //TODO: make this work for multiple creatures on the same spot
 				}
+			}
+			//go through queue and call conflict on all critters in queue
+			while(Q.peek() != null){
+			//while queue has next
+				Critter winner = conflict(current, Q.poll());
+			//have current critter as A, poll to get critter B
+				current = winner;
+			//call conflict(current, poll);
 			}
 		}
 		
@@ -331,9 +342,11 @@ public abstract class Critter {
 		
 	}
 
-	private static void conflict(Critter a, Critter b){
+	private static Critter conflict(Critter a, Critter b){
 		int aRoll = 0;
 		int bRoll = 0;
+		int startx = a.x_coord;
+		int starty = a.y_coord;
 		boolean aChoice = a.fight(b.toString());
 		boolean bChoice = b.fight(a.toString());
 		
@@ -351,11 +364,19 @@ public abstract class Critter {
 			if(aRoll > bRoll){
 				aRoll += b.energy/2;
 				b.energy = 0;
+				return a;
 			}
 			else{
 				bRoll += a.energy/2;
 				a.energy = 0;
+				return b;
 			}
 		}	
+		
+		//one of the critters moved if we reach this code, need to return one still in that spot
+		if(a.x_coord == startx && a.y_coord == starty){
+			return a;
+		}
+		return b;
 	}
 }
