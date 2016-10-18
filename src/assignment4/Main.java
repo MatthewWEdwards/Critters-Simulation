@@ -105,6 +105,8 @@ public class Main {
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
         ArrayList<Character> intChars = new ArrayList<Character>(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
         System.out.print("critters>");
+        
+        commandLoop:
         while(kb.hasNext()){
             boolean validInput = false;
         	String current = kb.nextLine();
@@ -126,19 +128,21 @@ public class Main {
         	
         	switch (switchString){
         		case "quit":
-        			System.exit(0);
-        			break;
+        			break commandLoop;
         		case "show":
         			Critter.displayWorld();
         			break;
         		case "step":
-        			//All this code is to parse how many steps the user wants to do
         			if(current.length() < 5){
         				Critter.worldTimeStep();
         			}
         			else{
         				if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
         	        		System.out.println("DEBUG: invalid input");
+        	        		break;
+        				}
+        				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
+        					System.out.println("DEBUG: invalid input");
         	        		break;
         				}
 	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
@@ -162,6 +166,7 @@ public class Main {
         			}
         			String critterClass = current.substring(5, critterToMake);
         			if(!checkIfInt(current, critterToMake+1)){
+        				System.out.println("DEBUG: invalid input");
         				break;
         			}
         			for(int stepper = 0; stepper < Integer.parseInt(current.substring(critterToMake+1, current.length())); stepper++){
@@ -174,7 +179,13 @@ public class Main {
         			}
         			break;
         		case "stats":
-        			break;
+					try {
+						Critter.runStats(Critter.getInstances(current.substring(6)));
+					} catch (InvalidCritterException e) {
+						System.out.println("DEBUG: invalid input");
+						break;
+					}
+					break;
         		default:
         			System.out.println("DEBUG: invalid input");
         	}
