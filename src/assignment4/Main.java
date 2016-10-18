@@ -106,11 +106,10 @@ public class Main {
         System.out.print("critters>");
         
         commandLoop:
-        while(true){
-        	if(kb.hasNext()){
+        while(kb.hasNext()){
 	            boolean validInput = false;
 	        	String current = kb.nextLine();
-	        	if(current.equals("")){
+	        	if(current.trim().equals("")){
 	        		continue commandLoop;
 	        	}
 	        	current.trim();
@@ -215,7 +214,6 @@ public class Main {
 	        			System.out.println("DEBUG: invalid input");
 	        	}
 	        	System.out.print("critters>");
-        	}
         }
         
         
