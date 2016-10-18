@@ -349,7 +349,7 @@ public abstract class Critter {
 		for(int printDash = 0; printDash<Params.world_width; printDash++){
 			System.out.print("-");
 		}
-		System.out.print("+");
+		System.out.println("+");
 		
 		
 		

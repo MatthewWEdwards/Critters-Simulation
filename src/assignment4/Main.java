@@ -103,94 +103,119 @@ public class Main {
         //Start controller component
         
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
-        ArrayList<Character> intChars = new ArrayList<Character>(Arrays.asList('0','1','2','3','4','5','6','7','8','9'));
         System.out.print("critters>");
         
         commandLoop:
-        while(kb.hasNext()){
-            boolean validInput = false;
-        	String current = kb.nextLine();
-        	current.trim();
-        	
-        	
-        	String switchString = new String(); 
-        	for(int i = 0; i < commands.size(); i++){
-        		if(current.contains(commands.get(i))){
-        			switchString = commands.get(i);
-        			validInput = true;
-        			break;
-        		}
-        	}
-        	if (!validInput){
-        		System.out.print("DEBUG: invalid input\ncritters>");
-        		continue;
-        	}
-        	
-        	switch (switchString){
-        		case "quit":
-        			break commandLoop;
-        		case "show":
-        			Critter.displayWorld();
-        			break;
-        		case "step":
-        			if(current.length() < 5){
-        				Critter.worldTimeStep();
-        			}
-        			else{
-        				if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
-        	        		System.out.println("DEBUG: invalid input");
-        	        		break;
-        				}
-        				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
-        					System.out.println("DEBUG: invalid input");
-        	        		break;
-        				}
-	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
+        while(true){
+        	if(kb.hasNext()){
+	            boolean validInput = false;
+	        	String current = kb.nextLine();
+	        	if(current.equals("")){
+	        		continue commandLoop;
+	        	}
+	        	current.trim();
+	        	
+	        	
+	        	String switchString = new String(); 
+	        	for(int i = 0; i < commands.size(); i++){
+	        		if(current.contains(commands.get(i))){
+	        			switchString = commands.get(i);
+	        			validInput = true;
+	        			break;
+	        		}
+	        	}
+	        	if (!validInput){
+	        		System.out.print("DEBUG: invalid input\ncritters>");
+	        		continue;
+	        	}
+	        	
+	        	switch (switchString){
+	        	
+	        	//TODO: weird behavior upon entering a newline with no other text
+	        		case "quit":
+	        			if(current.length() > 5){
+	        				System.out.println("DEBUG: invalid input");
+	    	        		break;
+	        			}
+	        			break commandLoop;
+	        		case "show":
+	        			if(current.length() > 5){
+	        				System.out.println("DEBUG: invalid input");
+	    	        		break;
+	        			}
+	        			Critter.displayWorld();
+	        			break;
+	        		case "step":
+	        			if(current.length() < 5){
 	        				Critter.worldTimeStep();
 	        			}
-        			}
-        			break;
-        		case "seed":
-        			Critter.setSeed(Integer.parseInt(current.substring(5, current.length()-1)));
-        			break;
-        		case "make":
-        			int critterToMake;
-        			for(critterToMake = 5; critterToMake < current.length(); critterToMake++){
-        				if(current.charAt(critterToMake) == ' '){
-        					break;
-        				}
-        			}
-        			if(critterToMake == current.length() - 1){
-        				System.out.println("DEBUG: invalid input");
-        				break;
-        			}
-        			String critterClass = current.substring(5, critterToMake);
-        			if(!checkIfInt(current, critterToMake+1)){
-        				System.out.println("DEBUG: invalid input");
-        				break;
-        			}
-        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(critterToMake+1, current.length())); stepper++){
-        				try {
-							Critter.makeCritter(critterClass);
+	        			else{
+	        				if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
+	        	        		System.out.println("DEBUG: invalid input");
+	        	        		break;
+	        				}
+	        				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
+	        					System.out.println("DEBUG: invalid input");
+	        	        		break;
+	        				}
+		        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
+		        				Critter.worldTimeStep();
+		        			}
+	        			}
+	        			break;
+	        		case "seed":
+	        			if(current.length() < 5){
+	        				System.out.println("DEBUG: invalid input");
+	    	        		break;
+	        			}
+	    				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
+	    					System.out.println("DEBUG: invalid input");
+	    	        		break;
+	    				}
+	        			if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
+	    	        		System.out.println("DEBUG: invalid input");
+	    	        		break;
+	    				}
+	        			Critter.setSeed(Integer.parseInt(current.substring(5, current.length())));
+	        			break;
+	        		case "make":
+	        			int critterToMake;
+	        			for(critterToMake = 5; critterToMake < current.length(); critterToMake++){
+	        				if(current.charAt(critterToMake) == ' '){
+	        					break;
+	        				}
+	        			}
+	        			if(critterToMake == current.length() - 1){
+	        				System.out.println("DEBUG: invalid input");
+	        				break;
+	        			}
+	        			String critterClass = current.substring(5, critterToMake);
+	        			if(!checkIfInt(current, critterToMake+1)){
+	        				System.out.println("DEBUG: invalid input");
+	        				break;
+	        			}
+	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(critterToMake+1, current.length())); stepper++){
+	        				try {
+								Critter.makeCritter(critterClass);
+							} catch (InvalidCritterException e) {
+								System.out.println("DEBUG: invalid input");
+								break; // This shouldn't happen
+							}
+	        			}
+	        			break;
+	        		case "stats":
+						try {
+							Critter.runStats(Critter.getInstances(current.substring(6)));
 						} catch (InvalidCritterException e) {
 							System.out.println("DEBUG: invalid input");
-							break; // This shouldn't happen
+							break;
 						}
-        			}
-        			break;
-        		case "stats":
-					try {
-						Critter.runStats(Critter.getInstances(current.substring(6)));
-					} catch (InvalidCritterException e) {
-						System.out.println("DEBUG: invalid input");
 						break;
-					}
-					break;
-        		default:
-        			System.out.println("DEBUG: invalid input");
+	        		default:
+	        			System.out.println("DEBUG: invalid input");
+	        	}
+	        	System.out.print("critters>");
         	}
-        	System.out.print("\ncritters>");
-        	
         }
         
         
