@@ -364,11 +364,18 @@ public abstract class Critter {
 		boolean bChoice = b.fight(a.toString());
 		
 		if(aChoice){
-			aRoll = Critter.getRandomInt(a.energy+1);
+			if(a.energy < 0)
+				aRoll = 0;
+			else 
+				aRoll = Critter.getRandomInt(a.energy+1);
 		}
 		if(bChoice){
-			bRoll = Critter.getRandomInt(b.energy+1);
+			if(b.energy < 0)
+				bRoll = 0;
+			else
+				bRoll = Critter.getRandomInt(b.energy+1);
 		}
+
 
 		
 		
