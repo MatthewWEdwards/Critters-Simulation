@@ -29,6 +29,18 @@ public class Main {
     private static boolean DEBUG = false; // Use it or not, as you wish!
     static PrintStream old = System.out;	// if you want to restore output to console
 
+	public static boolean checkIfInt(String input, int index){
+		charLoop:
+			for(int i = index; i < input.length(); i++){
+				for(char k = '0'; k <= '9'; k++){
+	        		if(input.charAt(i) == k){
+	        			continue charLoop;
+	        		}     	
+				}
+				return false;
+			}
+			return true;
+	}
 
     // Gets the package name.  The usage assumes that Critter and its subclasses are all in the same package.
     static {
@@ -40,6 +52,8 @@ public class Main {
      * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
      * and the second is test (for test output, where all output to be directed to a String), or nothing.
      */
+    
+    
     public static void main(String[] args) { 
         if (args.length != 0) {
             try {
@@ -123,15 +137,9 @@ public class Main {
         				Critter.worldTimeStep();
         			}
         			else{
-        				charLoop:
-        				for(int i = 5; i < current.length(); i++){
-        					for(char k = '0'; k <= '9'; k++){
-	        	        		if(current.charAt(i) == k){
-	        	        			continue charLoop;
-	        	        		}
-        					}
+        				if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
         	        		System.out.println("DEBUG: invalid input");
-        	        		return;
+        	        		break;
         				}
 	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
 	        				Critter.worldTimeStep();
@@ -142,6 +150,28 @@ public class Main {
         			Critter.setSeed(Integer.parseInt(current.substring(5, current.length()-1)));
         			break;
         		case "make":
+        			int critterToMake;
+        			for(critterToMake = 5; critterToMake < current.length(); critterToMake++){
+        				if(current.charAt(critterToMake) == ' '){
+        					break;
+        				}
+        			}
+        			if(critterToMake == current.length() - 1){
+        				System.out.println("DEBUG: invalid input");
+        				break;
+        			}
+        			String critterClass = current.substring(5, critterToMake);
+        			if(!checkIfInt(current, critterToMake+1)){
+        				break;
+        			}
+        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(critterToMake+1, current.length())); stepper++){
+        				try {
+							Critter.makeCritter(critterClass);
+						} catch (InvalidCritterException e) {
+							System.out.println("DEBUG: invalid input");
+							break; // This shouldn't happen
+						}
+        			}
         			break;
         		case "stats":
         			break;
@@ -151,6 +181,8 @@ public class Main {
         	System.out.print("\ncritters>");
         	
         }
+        
+        
         //End controller component
                 
         /* Write your code above */

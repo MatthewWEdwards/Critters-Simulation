@@ -3,7 +3,7 @@ package assignment4;
 /*
  * Algae class
  */
-public class Algae extends Critter.TestCritter {
+public class Algae extends Critter {
 
 	
 	@Override
@@ -11,7 +11,6 @@ public class Algae extends Critter.TestCritter {
 	
 	@Override
 	public void doTimeStep() {
-		super.setEnergy(super.getEnergy() + Params.photosynthesis_energy_amount);
 		
 	}
 

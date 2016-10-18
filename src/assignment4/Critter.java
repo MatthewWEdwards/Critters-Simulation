@@ -54,7 +54,6 @@ public abstract class Critter {
 	private boolean movedThisStep; // TODO: implement this in fight
 	
 	protected final void walk(int direction) {
-		//TODO: the world only wraps around width-wise, not height-wise. We need to fix this.
 		movedThisStep = true;
 		energy -= Params.walk_energy_cost;
 		switch (direction){
@@ -265,6 +264,9 @@ public abstract class Critter {
 			Critter current = population.get(i);
 			current.doTimeStep();
 			current.energy -= Params.rest_energy_cost;
+			if(current instanceof Algae){
+				current.energy += Params.photosynthesis_energy_amount;
+			}
 		}
 		
 		for(int k = 0; k < population.size(); k++){
