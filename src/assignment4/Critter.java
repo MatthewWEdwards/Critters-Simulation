@@ -122,8 +122,8 @@ public abstract class Critter {
 			this.energy = this.getEnergy()/2 + 1;
 		else
 			this.energy = this.getEnergy()/2;
-		offspring.x_coord = Critter.getRandomInt(this.x_coord);
-		offspring.y_coord = Critter.getRandomInt(this.y_coord);
+		offspring.x_coord = this.x_coord;
+		offspring.y_coord = this.y_coord;
 		offspring.walk(direction);
 		babies.add(offspring);
 		

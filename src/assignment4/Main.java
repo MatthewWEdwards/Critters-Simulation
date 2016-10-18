@@ -82,29 +82,12 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        
-        
-        
-        //Misc tests, TODO delete before submission
-        try{
-        	Critter.makeCritter("Craig");
-        	Critter.makeCritter("Craig");
-        	Critter.makeCritter("Craig");
-        	Critter.makeCritter("Craig");
-        	Critter.makeCritter("Algae");
-        	Critter.makeCritter("Algae");
-        }catch(InvalidCritterException e){
-        	
-        }
         Critter.displayWorld();
         System.out.println("\nGLHF");
-        //End of Misc. Tests
-        
-        //Start controller component
-        
+        //Start controller component 
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
         System.out.print("critters>");
-        
+       
         commandLoop:
         while(kb.hasNext()){
 	            boolean validInput = false;
@@ -129,8 +112,6 @@ public class Main {
 	        	}
 	        	
 	        	switch (switchString){
-	        	
-	        	//TODO: weird behavior upon entering a newline with no other text
 	        		case "quit":
 	        			if(current.length() > 5){
 	        				System.out.println("DEBUG: invalid input");
