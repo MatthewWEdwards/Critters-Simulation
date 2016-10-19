@@ -30,6 +30,9 @@ public class Main {
     static PrintStream old = System.out;	// if you want to restore output to console
 
 	public static boolean checkIfInt(String input, int index){
+		if(index >= input.length()){
+			return false;
+		}
 		charLoop:
 			for(int i = index; i < input.length(); i++){
 				for(char k = '0'; k <= '9'; k++){
@@ -184,6 +187,10 @@ public class Main {
 	        			}
 	        			break;
 	        		case "stats":
+	        			if(current.length() < 6){
+	        				System.out.println("DEBUG: invalid input");
+	        				break;
+	        			}
 						try {
 							Critter.runStats(Critter.getInstances(current.substring(6)));
 						} catch (InvalidCritterException e) {

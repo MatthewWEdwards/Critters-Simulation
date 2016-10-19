@@ -58,7 +58,7 @@ public abstract class Critter {
 	
 	protected final void walk(int direction) {
 		energy -= Params.walk_energy_cost;
-		if(movedThisStep = true)
+		if(movedThisStep == true)
 			return;
 		int startx = x_coord;
 		int starty = y_coord;
@@ -198,6 +198,7 @@ public abstract class Critter {
 			this.energy = this.getEnergy()/2;
 		offspring.x_coord = this.x_coord;
 		offspring.y_coord = this.y_coord;
+		offspring.movedThisStep = false;
 		offspring.walk(direction);
 		babies.add(offspring);
 		
@@ -391,6 +392,8 @@ public abstract class Critter {
 		for(Critter addBabies: babies){
 			population.add(addBabies);
 		}
+		
+		babies.clear();
 		
 		for(int k = 0; k < population.size(); k++){
 			population.get(k).movedThisStep = false;
