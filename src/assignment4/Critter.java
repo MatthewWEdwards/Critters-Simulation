@@ -27,6 +27,7 @@ public abstract class Critter {
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private static List<String> typesOfCritters = new java.util.ArrayList<String>();
 	private static int timeStep = 0;
+	private static int[][] worldArray = new int[Params.world_width][Params.world_height];
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -47,15 +48,22 @@ public abstract class Critter {
 	public String toString() { return ""; }
 	
 	private int energy = 0;
+	
 	protected int getEnergy() { return energy; }
 	
 	private int x_coord;
 	private int y_coord;
-	private boolean movedThisStep; // TODO: implement this in fight
+	private boolean movedThisStep; 
+	private boolean inFight;
 	
 	protected final void walk(int direction) {
-		movedThisStep = true;
 		energy -= Params.walk_energy_cost;
+		if(movedThisStep = true)
+			return;
+		int startx = x_coord;
+		int starty = y_coord;
+		worldArray[x_coord][y_coord] -= 1;
+		
 		switch (direction){
 			case 0: x_coord++;
 					if (x_coord == Params.world_width)
@@ -102,14 +110,80 @@ public abstract class Critter {
 						x_coord = Params.world_width -1;
 				break;
 		}
+		if(this.inFight && (worldArray[x_coord][y_coord] >= 1)){
+			x_coord = startx;
+			y_coord = starty;
+		}
+		else {
+			movedThisStep = true;
+		}
+		worldArray[x_coord][y_coord] += 1;
 		
 	}
 	
 	protected final void run(int direction) {
-		walk(direction);
-		walk(direction);
-		energy += (2*Params.walk_energy_cost);
 		energy -= Params.run_energy_cost;
+		if(movedThisStep = true)
+			return;
+		int startx = x_coord;
+		int starty = y_coord;
+		worldArray[x_coord][y_coord] -= 1; 
+		
+		switch (direction){
+			case 0: x_coord+= 2;
+					if (x_coord >= Params.world_width)
+						x_coord = x_coord - Params.world_width;
+					
+				break;
+			case 1: y_coord-= 2;
+					x_coord+= 2;
+					if (x_coord >= Params.world_width)
+						x_coord = x_coord - Params.world_width;
+					if (y_coord < 0)
+						y_coord = Params.world_height + y_coord;
+				break;
+			case 2: y_coord-= 2;
+					if (y_coord < 0)
+						y_coord = Params.world_height + y_coord;
+				break;
+			case 3: y_coord-= 2;
+					x_coord-= 2;
+					if (y_coord < 0)
+						y_coord = Params.world_height + y_coord;
+					if (x_coord < 0)
+						x_coord = Params.world_width + x_coord;
+				break;
+			case 4: x_coord-= 2;
+					if (x_coord < 0)
+						x_coord = Params.world_width + x_coord;
+				break;
+			case 5: x_coord-= 2;
+					y_coord+= 2;
+					if (x_coord < 0)
+						x_coord = Params.world_width + x_coord;
+					if (y_coord >= Params.world_height)
+						y_coord = y_coord - Params.world_height;
+				break;
+			case 6: y_coord+= 2;
+					if (y_coord >= Params.world_height)
+						y_coord = y_coord - Params.world_height;
+				break;
+			case 7: y_coord+= 2;
+					x_coord-= 2;
+					if (y_coord >= Params.world_height)
+						y_coord = y_coord - Params.world_height;
+					if(x_coord < 0)
+						x_coord = Params.world_width + x_coord;
+				break;
+		}
+		if(this.inFight && (worldArray[x_coord][y_coord] >= 1)){
+			x_coord = startx;
+			y_coord = starty;
+		}
+		else {
+			movedThisStep = true;
+		}
+		worldArray[x_coord][y_coord] += 1;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -152,8 +226,10 @@ public abstract class Critter {
 			population.add(newCrit);
 			newCrit.x_coord = Critter.getRandomInt(Params.world_width);
 			newCrit.y_coord = Critter.getRandomInt(Params.world_height);
+			worldArray[newCrit.x_coord][newCrit.y_coord] += 1;
 			newCrit.energy = Params.start_energy;
 			newCrit.movedThisStep = false;
+			newCrit.inFight = false;
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoClassDefFoundError e) {
 			throw new InvalidCritterException(critter_class_name);
 		}
@@ -360,6 +436,8 @@ public abstract class Critter {
 		int bRoll = 0;
 		int startx = a.x_coord;
 		int starty = a.y_coord;
+		a.inFight = true;
+		b.inFight = true;
 		boolean aChoice = a.fight(b.toString());
 		boolean bChoice = b.fight(a.toString());
 		
@@ -376,7 +454,8 @@ public abstract class Critter {
 				bRoll = Critter.getRandomInt(b.energy+1);
 		}
 
-
+		a.inFight = false;
+		b.inFight = false;
 		
 		
 		
