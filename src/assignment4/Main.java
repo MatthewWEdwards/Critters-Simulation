@@ -13,6 +13,8 @@
 package assignment4; // cannot be in default package
 import java.util.*;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 
 /*
@@ -192,8 +194,10 @@ public class Main {
 	        				break;
 	        			}
 						try {
-							Critter.runStats(Critter.getInstances(current.substring(6)));
-						} catch (InvalidCritterException e) {
+							Class<?> critter = Class.forName("assignment4." + current.substring(6));
+							Method stats = critter.getMethod("runStats", List.class);
+							stats.invoke(critter, Critter.getInstances(current.substring(6)));
+						} catch (InvalidCritterException | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException  e) {
 							System.out.println("DEBUG: invalid input");
 							break;
 						}

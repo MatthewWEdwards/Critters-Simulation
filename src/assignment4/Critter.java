@@ -123,7 +123,7 @@ public abstract class Critter {
 	
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
-		if(movedThisStep = true)
+		if(movedThisStep == true)
 			return;
 		int startx = x_coord;
 		int starty = y_coord;
@@ -211,7 +211,6 @@ public abstract class Critter {
 	 * create and initialize a Critter subclass.
 	 * critter_class_name must be the unqualified name of a concrete subclass of Critter, if not,
 	 * an InvalidCritterException must be thrown.
-	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
 	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
 	 * an Exception.)
 	 * @param critter_class_name
@@ -391,6 +390,14 @@ public abstract class Critter {
 		
 		for(Critter addBabies: babies){
 			population.add(addBabies);
+		}
+		
+		for(int i = 0; i < Params.refresh_algae_count; i++){
+			try {
+				makeCritter("Algae");
+			} catch (InvalidCritterException e) {
+				break;
+			}
 		}
 		
 		babies.clear();
