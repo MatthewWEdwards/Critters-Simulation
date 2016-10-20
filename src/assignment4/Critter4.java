@@ -27,7 +27,7 @@ public class Critter4 extends Critter {
 	/**
 	 * representation of Critter4 in world view component
 	 */
-	public String toString() { return "A"; }
+	public String toString() { return "4"; }
 	
 	private String Colony = new String();
 	private boolean isQueen;

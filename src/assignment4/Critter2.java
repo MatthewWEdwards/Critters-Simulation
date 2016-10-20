@@ -24,7 +24,7 @@ public class Critter2 extends Critter{
 	/**
 	 * Represented in world view by L
 	 */
-	public String toString() { return "L"; }
+	public String toString() { return "2"; }
 
 	@Override 
 	/**

@@ -27,7 +27,7 @@ public class Critter3 extends Critter{
 	/**
 	 * Critter 3 represented by P in view component
 	 */
-	public String toString() { return "P"; }
+	public String toString() { return "3"; }
 	
 	
 	/** Behavior of Critter3 in fight, reproduces and fights if it has twice the energy needed to reproduce
