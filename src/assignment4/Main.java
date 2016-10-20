@@ -175,6 +175,15 @@ public class Main {
 	        				break;
 	        			}
 	        			String critterClass = current.substring(5, critterToMake);
+	        			if(current.length() <= critterToMake){
+	        				try {
+								Critter.makeCritter(critterClass);
+							} catch (InvalidCritterException e) {
+								System.out.println("DEBUG: invalid input");
+								break;
+							}
+	        				break;
+	        			}
 	        			if(!checkIfInt(current, critterToMake+1)){
 	        				System.out.println("DEBUG: invalid input");
 	        				break;
