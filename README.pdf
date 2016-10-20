@@ -9,3 +9,13 @@ include header comments with descriptions. Your toString() for these crit-
 ters should be 1, 2 etc.
 • Before submission, make sure that your main is cleaned up, so that it produces no
 output to the console, and the Critter world is empty.
+
+
+README.pdf
+
+
+We used arraylists to hold the population of critters, population of babies, and types of critters. 
+We used a 2D array to represent a grid of the world where each coordinate is an int that states how many critters are at that location. It is used to determine if a critter can move to their desired location if walk or run is called during fight. 
+We created a conflict() method to handle encounters between critters. 
+
+We created 4 new classes, Critter1, Critter2, Critter3, and Critter4, which all extend Critter. Each class overrides some or all of the methods in Critter to make the implementation unique to their own class. Other than constructors, none have new methods. 
