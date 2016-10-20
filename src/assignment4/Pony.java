@@ -10,21 +10,22 @@ public class Pony extends Critter{
 	
 	
 	public boolean fight(String opponent) {
-		if(this.getEnergy() > 10){
+		if(this.getEnergy() > 2*Params.min_reproduce_energy){
+			Pony child = new Pony();
+			reproduce(child, Critter.getRandomInt(8));
 			return true;
 		}
 		
 		run(Critter.getRandomInt(8));
 		return false;
 		
-		 }
+	 }
 
 	@Override
 	public void doTimeStep() {
-		/* take one step forward */
-	
+			
 		
-		if (getEnergy() > 15) {
+		if (getEnergy() > 2*Params.min_reproduce_energy) {
 			Pony child = new Pony();
 			reproduce(child, Critter.getRandomInt(8));
 		}
@@ -34,4 +35,3 @@ public class Pony extends Critter{
 
 	
 }
-
