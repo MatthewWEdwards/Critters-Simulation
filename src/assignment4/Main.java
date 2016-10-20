@@ -112,20 +112,20 @@ public class Main {
 	        		}
 	        	}
 	        	if (!validInput){
-	        		System.out.print("DEBUG: invalid input\ncritters>");
+	        		System.out.print("invalid command: " + current + "\ncritters>");
 	        		continue;
 	        	}
 	        	
 	        	switch (switchString){
 	        		case "quit":
 	        			if(current.length() > 5){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	    	        		break;
 	        			}
 	        			break commandLoop;
 	        		case "show":
 	        			if(current.length() > 5){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	    	        		break;
 	        			}
 	        			Critter.displayWorld();
@@ -136,11 +136,11 @@ public class Main {
 	        			}
 	        			else{
 	        				if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
-	        	        		System.out.println("DEBUG: invalid input");
+	        	        		System.out.println("error processing: " + current);
 	        	        		break;
 	        				}
 	        				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
-	        					System.out.println("DEBUG: invalid input");
+	        					System.out.println("error processing: " + current);
 	        	        		break;
 	        				}
 		        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(5, current.length())); stepper++){
@@ -150,15 +150,15 @@ public class Main {
 	        			break;
 	        		case "seed":
 	        			if(current.length() < 5){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	    	        		break;
 	        			}
 	    				if(current.charAt(4) != ' '){ // check char between "step" and the number of steps.
-	    					System.out.println("DEBUG: invalid input");
+	    					System.out.println("error processing: " + current);
 	    	        		break;
 	    				}
 	        			if(!checkIfInt(current, 5)){ // checks if the second part of the current string is solely an integer
-	    	        		System.out.println("DEBUG: invalid input");
+	    	        		System.out.println("error processing: " + current);
 	    	        		break;
 	    				}
 	        			Critter.setSeed(Integer.parseInt(current.substring(5, current.length())));
@@ -171,7 +171,7 @@ public class Main {
 	        				}
 	        			}
 	        			if(critterToMake == current.length() - 1){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	        				break;
 	        			}
 	        			String critterClass = current.substring(5, critterToMake);
@@ -179,27 +179,27 @@ public class Main {
 	        				try {
 								Critter.makeCritter(critterClass);
 							} catch (InvalidCritterException e) {
-								System.out.println("DEBUG: invalid input");
+								System.out.println("error processing: " + current);
 								break;
 							}
 	        				break;
 	        			}
 	        			if(!checkIfInt(current, critterToMake+1)){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	        				break;
 	        			}
 	        			for(int stepper = 0; stepper < Integer.parseInt(current.substring(critterToMake+1, current.length())); stepper++){
 	        				try {
 								Critter.makeCritter(critterClass);
 							} catch (InvalidCritterException e) {
-								System.out.println("DEBUG: invalid input");
+								System.out.println("error processing: " + current);
 								break; // This shouldn't happen
 							}
 	        			}
 	        			break;
 	        		case "stats":
 	        			if(current.length() < 6){
-	        				System.out.println("DEBUG: invalid input");
+	        				System.out.println("error processing: " + current);
 	        				break;
 	        			}
 						try {
@@ -207,12 +207,12 @@ public class Main {
 							Method stats = critter.getMethod("runStats", List.class);
 							stats.invoke(critter, Critter.getInstances(current.substring(6)));
 						} catch (InvalidCritterException | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException  e) {
-							System.out.println("DEBUG: invalid input");
+							System.out.println("error processing: " + current);
 							break;
 						}
 						break;
 	        		default:
-	        			System.out.println("DEBUG: invalid input");
+	        			System.out.println("invalid command: " + current);
 	        	}
 	        	System.out.print("critters>");
         }
