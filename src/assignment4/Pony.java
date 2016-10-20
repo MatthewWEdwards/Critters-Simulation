@@ -10,7 +10,11 @@
  * Fall 2016
  */
 package assignment4;
-
+/**
+ * 
+ * @author rstehle
+ *
+ */
 public class Pony extends Critter{
 	@Override
 	/**
