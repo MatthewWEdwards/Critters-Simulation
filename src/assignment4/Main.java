@@ -102,9 +102,13 @@ public class Main {
 	        	current = current.trim();
 	        	
 	        	
+	        	int commandSize = 4;
+	        	if(!(current.length() <= 4)){
+	        		commandSize++;
+	        	}
 	        	String switchString = new String(); 
 	        	for(int i = 0; i < commands.size(); i++){
-	        		if(current.substring(0, 5).contains(commands.get(i))){
+	        		if(current.substring(0, commandSize).contains(commands.get(i))){
 	        			switchString = commands.get(i);
 	        			validInput = true;
 	        			break;
