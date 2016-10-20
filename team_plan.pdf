@@ -1,2 +1,45 @@
 Each team should also provide a document team_plan.pdf describing the
 work done by each of you. This document must include your Git repository URL.
+
+EE422C Project 3 (Word Ladder)  Team Plan
+(Replace <...> with your actual data.)<Student Name>  <Student EID> <Student Name>  <Student EID> Fall 2016
+Student A did the DFS module initially, and both sat down together for the debugging.
+… Five test cases were written by … and 5 by …. 
+We spent approximately xxx hours together in the same room. 
+We also used screen sharing for discussions.The final testing was done together.etc. 
+
+
+
+EE422C Project 4 (Critters 1) Team Plan
+
+Regan Stehle
+rms3762
+Matthewards
+mwe295
+Fall 2016
+
+https://github.com/MatthewWEdwards/Project4.git
+
+We used a google doc to delegate tasks and ask questions, make comments, or update our progess as we worked on each task if the other partner was not present.
+The task breakdown is as follows:
+
+
+View Component - 	Matt
+Walk function - 	Regan
+Time Steps - 		  Regan
+Critter Collection - 	Matt
+Controller Component - Matt
+ 
+Run - Regan
+Encounters - Regan
+Algae - Matt
+Reproduce - Matt
+
+Critter1 - Matt
+Critter2 - Regan
+Critter3 - Regan
+Critter4 - Matt
+
+We met four times in order to test Stage 1, Stage 2, Stage 3, and then the project as a whole using the test cases provided to us as well as our own.
+
+We spent approximately 10 hours together in the same room. 
