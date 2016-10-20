@@ -12,7 +12,7 @@
 package assignment4;
 
 /*
- * Bunny class
+ * Ant class
  */
 public class Ant extends Critter {
 
