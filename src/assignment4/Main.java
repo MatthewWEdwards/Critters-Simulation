@@ -1,12 +1,11 @@
-/* CRITTERS Main.java
+/* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Regan Stehle
+ * rms3762
+ * 16465
+ * Matthew Edwards
+ * mwe295
+ * 16475
  * Slip days used: <0>
  * Fall 2016
  */
