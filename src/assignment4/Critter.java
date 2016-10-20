@@ -123,7 +123,7 @@ public abstract class Critter {
 	
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
-		if(movedThisStep = true)
+		if(movedThisStep == true)
 			return;
 		int startx = x_coord;
 		int starty = y_coord;
