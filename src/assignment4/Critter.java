@@ -1,12 +1,11 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Regan Stehle
+ * rms3762
+ * 16465
+ * Matthew Edwards
+ * mwe295
+ * 16475
  * Slip days used: <0>
  * Fall 2016
  */
@@ -56,6 +55,11 @@ public abstract class Critter {
 	private boolean movedThisStep; 
 	private boolean inFight;
 	
+	
+	/**
+	 * This function allows the critter to move one space in a given direction if it meets certain criteria
+	 * @param direction indicates which direction the Critter wishes to walk
+	 */
 	protected final void walk(int direction) {
 		energy -= Params.walk_energy_cost;
 		if(movedThisStep == true)
@@ -120,7 +124,10 @@ public abstract class Critter {
 		worldArray[x_coord][y_coord] += 1;
 		
 	}
-	
+	/**
+	 * This function allows a Critter to move two spaces in a given direction if it meets certain criteria
+	 * @param direction is the direction it wishes to move
+	 */
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
 		if(movedThisStep == true)
@@ -185,7 +192,11 @@ public abstract class Critter {
 		}
 		worldArray[x_coord][y_coord] += 1;
 	}
-	
+	/**
+	 * This function allows a critter to reproduce and create a new critter of the same type
+	 * @param offspring the new critter created
+	 * @param direction the original critter used to create the offspring
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
 		
 		if(this.getEnergy() < Params.min_reproduce_energy){
@@ -302,11 +313,15 @@ public abstract class Critter {
 		}
 		
 		protected void setX_coord(int new_x_coord) {
+			worldArray[super.x_coord][super.y_coord] -= 1;
 			super.x_coord = new_x_coord;
+			worldArray[super.x_coord][super.y_coord] += 1;
 		}
 		
 		protected void setY_coord(int new_y_coord) {
+			worldArray[super.x_coord][super.y_coord] -= 1;
 			super.y_coord = new_y_coord;
+			worldArray[super.x_coord][super.y_coord] += 1;
 		}
 		
 		protected int getX_coord() {
@@ -344,7 +359,10 @@ public abstract class Critter {
 	public static void clearWorld() {
 		population.clear();
 	}
-	
+	/** This function calls doTimeStep for all Critters in population, then resolves encounters of all critters located
+	 * in the same spot,subtracts rest energy from all critters, generates Algae, moves babies created during this time
+	 * step to the population array
+	 */ 
 	public static void worldTimeStep() {
 		timeStep++;
 		for(int i = 0; i < population.size(); i++){ //Time Steps
@@ -363,7 +381,7 @@ public abstract class Critter {
 				if(current.x_coord == population.get(i).x_coord && current.y_coord == population.get(i).y_coord && i != k){
 					//add to conflict queue
 					Q.add(population.get(i));
-					//conflict(current, population.get(i)); //TODO: make this work for multiple creatures on the same spot
+					//conflict(current, population.get(i)); 
 				}
 			}
 			//go through queue and call conflict on all critters in queue
@@ -408,7 +426,9 @@ public abstract class Critter {
 		
 	}
 
-	
+	/**
+	 * Prints a 2D grid simulation of the world
+	 */
 	public static void displayWorld() {
 		System.out.print("+");
 		for(int printDash = 0; printDash<Params.world_width; printDash++){
@@ -440,7 +460,13 @@ public abstract class Critter {
 		
 		
 	}
-
+	/**
+	 *  Resolves conflicts between critters located in the same space in the world, only at most one critter can remain, 
+	 *  whether because the other one flees or because it fights and gets killed
+	 * @param a first critter
+	 * @param b second critter
+	 * @return the winning critter
+	 */
 	private static Critter conflict(Critter a, Critter b){
 		int aRoll = 0;
 		int bRoll = 0;
