@@ -86,6 +86,7 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
+	      Critter.clearWorld();
         //Start controller component 
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
         System.out.print("critters>");
