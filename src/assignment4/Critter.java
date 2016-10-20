@@ -36,7 +36,7 @@ public abstract class Critter {
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
-	}
+	} 
 	
 	public static void setSeed(long new_seed) {
 		rand = new java.util.Random(new_seed);
