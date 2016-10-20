@@ -99,7 +99,7 @@ public class Main {
 	        	if(current.trim().equals("")){
 	        		continue commandLoop;
 	        	}
-	        	current.trim();
+	        	current = current.trim();
 	        	
 	        	
 	        	String switchString = new String(); 
