@@ -104,12 +104,14 @@ public class Main {
 	        	
 	        	String switchString = new String(); 
 	        	for(int i = 0; i < commands.size(); i++){
-	        		if(current.contains(commands.get(i))){
+	        		if(current.substring(0, 5).contains(commands.get(i))){
 	        			switchString = commands.get(i);
 	        			validInput = true;
 	        			break;
 	        		}
 	        	}
+	        	
+	        	
 	        	if (!validInput){
 	        		System.out.print("invalid command: " + current + "\ncritters>");
 	        		continue;
