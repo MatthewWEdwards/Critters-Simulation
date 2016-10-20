@@ -1,5 +1,11 @@
-Each team should also provide a README.pdf document describing your code
+ Each team should also provide a README.pdf document describing your code
 structure.
 o Did you create any new classes, and if so, what fields and methods are in
 it?
 o What is the data structure that you used to hold your Critters?
+
+Name your critter source files Critter1.java, Critter2.java etc., and
+include header comments with descriptions. Your toString() for these crit-
+ters should be 1, 2 etc.
+• Before submission, make sure that your main is cleaned up, so that it produces no
+output to the console, and the Critter world is empty.
