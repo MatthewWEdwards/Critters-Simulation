@@ -1,4 +1,4 @@
-/* CRITTERS Critter.java
+/* CRITTER/* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Regan Stehle
  * rms3762
@@ -86,8 +86,7 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        Critter.displayWorld();
-        System.out.println("\nGLHF");
+        
         //Start controller component 
         ArrayList<String> commands = new ArrayList<String>(Arrays.asList("quit", "show", "step", "seed", "make", "stats"));
         System.out.print("critters>");
@@ -233,3 +232,5 @@ public class Main {
 
     }
 }
+
+
