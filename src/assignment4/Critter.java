@@ -357,6 +357,7 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		worldArray = new int[Params.world_width][Params.world_height];
 		population.clear();
 	}
 	/** This function calls doTimeStep for all Critters in population, then resolves encounters of all critters located
