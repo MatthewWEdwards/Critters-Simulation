@@ -100,7 +100,10 @@ public class Main {
 	        		continue commandLoop;
 	        	}
 	        	current = current.trim();
-	        	
+	        	if(current.length() <= 3){
+	        		System.out.print("invalid command: " + current + "\ncritters>");
+	        		continue;
+	        	}
 	        	
 	        	int commandSize = 4;
 	        	if(!(current.length() <= 4)){
